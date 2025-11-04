@@ -3,7 +3,7 @@
   <head>
     <!-- ...existing code... -->
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"> </script>
-     <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
   </head>
   <body>
     <a-scene shadow="type: pcfsoft; autoUpdate: true" renderer="antialias: true">
@@ -40,16 +40,37 @@
                   material="color: #fff; roughness: 0.95"
                   shadow="cast: true; receive: false"></a-sphere>
 
-        <!-- Eyes -->
-        <a-sphere radius="0.07" position="-0.18 5.08 -0.62" color="#111" shadow="cast: true"></a-sphere>
-        <a-sphere radius="0.07" position="0.18 5.08 -0.62" color="#111" shadow="cast: true"></a-sphere>
+        <!-- Eyes: white eyeballs + pupils + tiny specular highlight -->
+        <!-- Left eyeball -->
+        <a-sphere radius="0.095" position="-0.18 5.08 -0.62"
+                  material="color: #fff; roughness: 0.2; metalness: 0"
+                  shadow="cast: true"></a-sphere>
+        <!-- Left pupil -->
+        <a-sphere radius="0.045" position="-0.18 5.08 -0.72"
+                  material="color: #111; roughness: 0.1; metalness: 0"
+                  shadow="cast: true"></a-sphere>
+        <!-- Left specular catch (tiny white dot) -->
+        <a-sphere radius="0.01" position="-0.16 5.10 -0.69" color="#fff" material="roughness: 0.0"></a-sphere>
 
-        <!-- Carrot nose (cone pointing forward) -->
-        <a-entity geometry="primitive: cone; height: 0.55; radiusBottom: 0.08; radiusTop: 0.015"
-                  material="color: #ff8c00; roughness: 0.6"
+        <!-- Right eyeball -->
+        <a-sphere radius="0.095" position="0.18 5.08 -0.62"
+                  material="color: #fff; roughness: 0.2; metalness: 0"
+                  shadow="cast: true"></a-sphere>
+        <!-- Right pupil -->
+        <a-sphere radius="0.045" position="0.18 5.08 -0.72"
+                  material="color: #111; roughness: 0.1; metalness: 0"
+                  shadow="cast: true"></a-sphere>
+        <!-- Right specular catch -->
+        <a-sphere radius="0.01" position="0.20 5.10 -0.69" color="#fff" material="roughness: 0.0"></a-sphere>
+
+        <!-- Carrot nose (cone pointing forward) with small base for realism -->
+        <a-entity geometry="primitive: cone; height: 0.55; radiusBottom: 0.09; radiusTop: 0.02"
+                  material="color: #ff8c00; roughness: 0.4; metalness: 0"
                   position="0 5.0 -0.78"
                   rotation="-90 0 0"
                   shadow="cast: true"></a-entity>
+        <!-- Small rounded base where the carrot meets the face -->
+        <a-sphere radius="0.045" position="0 5.02 -0.62" color="#ff9a2b" material="roughness:0.4" shadow="cast: true"></a-sphere>
 
         <!-- Mouth (small coal pieces in an arc) -->
         <a-sphere radius="0.045" position="-0.28 4.88 -0.65" color="#111" shadow="cast: true"></a-sphere>
