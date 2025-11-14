@@ -5,11 +5,27 @@
   </head>
   <body>
     <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
+      <a-assets>
+        <img id="skyTex" src="Assets/sky_2_edited.jpg" alt="sky">
+        <img id="towelTex" src="Assets/towel_unsplash.jpg" alt="towel">
+        <img id="coralTex" src="Assets/coral_pattern.jpg" alt="coral pattern">
+        <img id="toralTex" src="Assets/toral_pattern.jpg" alt="toral pattern">
+      </a-assets>
+
+      <a-sky src="#skyTex"></a-sky>
+
+      <!-- Towel with texture (slightly above sand to avoid z-fight) -->
+      <a-plane src="#towelTex" width="1.6" height="0.8" rotation="-90 0 0" position="1.2 0.01 -2.6" material="side:double"></a-plane>
+
+      <!-- Surfboard using textured stretched sphere to approximate a surfboard shape -->
+      <a-entity position="1.8 0.03 -2.2" rotation="0 20 0">
+        <a-entity geometry="primitive: sphere; radius: 0.6; segmentsWidth: 36; segmentsHeight: 18"
+                  material="src: #coralTex; repeat: 1 1"
+                  scale="0.45 0.06 2.2"
+                  rotation="90 90 0"></a-entity>
+        <!-- tapered nose (small cone) -->
+        <a-cone height="0.08" radius-bottom="0.08" radius-top="0.001" color="#FFFFFF" position="0 0 1.30" rotation="0 0 0" scale="0.45 0.06 1"></a-cone>
+      </a-entity>
     </a-scene>
   </body>
 </html>
