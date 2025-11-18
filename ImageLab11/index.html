@@ -1,15 +1,77 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"> </script>
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
   </head>
   <body>
     <a-scene>
+      <a-assets>
+        <img id="bgTex" src="Assets/Edited2626866515_639e64dc0a_k.jpg" alt="background">
+      </a-assets>
+
       <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
       <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
       <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
+      <a-plane position="0 0 1" rotation="-90 0 0" width="20" height="20" color="#F4D27A"></a-plane>
+
+      <!-- Anchor point for all balloons -->
+      <a-entity id="balloonAnchor" position="0 1.8 -2" mass-balloons="count:1500; radiusMin:0.12; radiusMax:1.8"></a-entity>
+
+      <!-- Set Sky / background -->
+      <a-sky src="#bgTex"></a-sky>
     </a-scene>
+
+    <script>
+      AFRAME.registerComponent('mass-balloons', {
+        schema: {
+          count: { type: 'int', default: 6000 },
+          radiusMin: { type: 'number', default: 5 },
+          radiusMax: { type: 'number', default: 10 },
+          colors: { default: ['#62D12E','#FC8EAC','#FFEE8D','#00008B','#ED2939','#F4B4C4','#2E9DD1'] }
+        // Colors: {default: [(1)pure red,(2)dark pink,(3)pastel yellow (4)dark blue (5)Imperial red (6) Pink,'#FFA500']}
+        },
+        init: function () {
+          const sceneEl = this.el.sceneEl;
+          const anchorWorld = new AFRAME.THREE.Vector3();
+          this.el.object3D.getWorldPosition(anchorWorld);
+
+          const colors = this.data.colors;
+          const count = this.data.count;
+
+          for (let i = 0; i < count; i++) {
+            // slightly less tight grouping: wider cone and slightly larger radii
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * (Math.PI / 1); // wider cone than before
+            // bias radius a bit less strongly toward tiny values for a looser cluster
+            const r = Math.pow(Math.random(), 2) * (this.data.radiusMax - this.data.radiusMin) + this.data.radiusMin;
+
+            const dx = r * Math.cos(theta) * Math.sin(phi);
+            const dy = r * Math.cos(phi) + 2; // small upward offset
+            const dz = r * Math.sin(theta) * Math.sin(phi);
+
+            const bx = anchorWorld.x + dx;
+            const by = anchorWorld.y + dy;
+            const bz = anchorWorld.z + dz;
+
+            // create balloon
+            const balloon = document.createElement('a-sphere');
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const radius = 0.07 + Math.random() * 0.06; // slightly smaller to fit more
+            balloon.setAttribute('radius', radius);
+            balloon.setAttribute('color', color);
+            balloon.setAttribute('position', `${bx} ${by} ${bz}`);
+
+            // small scale/rotation variation for visual density
+            const s = 0.85 + Math.random() * 0.4;
+            balloon.setAttribute('scale', `${s} ${s} ${s}`);
+            balloon.setAttribute('animation__spin', `property: rotation; to: ${Math.random()*20} ${Math.random()*360} ${Math.random()*20}; dur: ${7000+Math.random()*9000}; loop: true; easing: linear`);
+
+            sceneEl.appendChild(balloon);
+          }
+        }
+      });
+    </script>
   </body>
 </html>
+
