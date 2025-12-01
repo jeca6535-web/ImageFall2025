@@ -10,17 +10,10 @@
         <img id="bgTex" src="Assets/Edited2626866515_639e64dc0a_k.jpg" alt="background">
       </a-assets>
 
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
       <a-plane position="0 0 1" rotation="-90 0 0" width="20" height="20" color="#F4D27A"></a-plane>
 
         <!-- 3D model assets -->
-        <a-asset-item id="cloud-obj" src="Assets/CloudLong.obj"></a-asset-item>
-        <a-asset-item id="cloud-mtl" src="Assets/CloudLong.mtl"></a-asset-item>
-
-        <a-asset-item id="cottage-obj" src="Assets/Cottage_2.obj"></a-asset-item>
-        <a-asset-item id="cottage-mtl" src="Assets/Cottage_2.mtl"></a-asset-item>
+      <a-obj-model src="Assets/Cottage_2.obj"></a-obj-model>
       </a-assets>
 
       <!-- Anchor point for all balloons -->
@@ -30,19 +23,13 @@
       <a-sky src="#bgTex"></a-sky>
     </a-scene>
 
-         <!-- CloudLong model (positioned above / behind scene) -->
+         <!-- Cottage model (positioned above / behind scene) -->
       <a-entity obj-model="obj: #cloud-obj; mtl: #cloud-mtl"
-                position="-2 3 -4"
-                rotation="0 90 0"
-                scale="1.5 1.5 1.5"
-                shadow="cast: false; receive: false"></a-entity>
+                position="10 3 -4"
+                rotation="0 0 0"
+                scale="1 1 1"
+                shadow="cast: true; receive: false"></a-entity>
 
-      <!-- Cottage_2 model (grounded in scene) -->
-      <a-entity obj-model="obj: #cottage-obj; mtl: #cottage-mtl"
-                position="1 0 -3"
-                rotation="0 180 0"
-                scale="0.8 0.8 0.8"
-                shadow="cast: true; receive: true"></a-entity>
 
     <script>
       AFRAME.registerComponent('mass-balloons', {
